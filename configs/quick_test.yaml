@@ -1,0 +1,39 @@
+privacy:
+  epsilon_total: 1.0
+  delta: 1.0e-5
+  epsilon_min_per_table: 0.05
+
+synthesis:
+  method: noisy_marginals
+  max_parents_bn: 2
+  noise_type: laplace
+  num_bins: 16
+  epochs: 5
+  hidden_dims: [64, 64]
+  T: 50
+
+allocator:
+  method: lp
+  solver: scipy
+  query_weight_decay: 0.9
+
+enforcer:
+  method: greedy
+  max_repair_iterations: 50
+  ot_reg: 0.01
+
+evaluation:
+  num_queries: 20
+  query_types:
+    - 1way
+    - 2way
+    - cross_table
+  ml_test_fraction: 0.3
+  ml_model: random_forest
+
+experiment:
+  epsilons: [1.0, 5.0]
+  num_runs: 1
+  seed: 42
+  datasets:
+    - synthetic_star

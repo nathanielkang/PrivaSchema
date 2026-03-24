@@ -1,0 +1,46 @@
+privacy:
+  epsilon_total: 1.0
+  delta: 1.0e-5
+  epsilon_min_per_table: 0.05
+
+synthesis:
+  method: noisy_marginals   # noisy_marginals (PrivBayes-style) or diffusion
+  max_parents_bn: 3         # max parents in Bayesian network
+  noise_type: laplace       # laplace or gaussian
+  num_bins: 32              # discretization bins for continuous columns
+  epochs: 200               # for diffusion method
+  hidden_dims: [256, 256]   # for diffusion method
+  T: 1000                   # diffusion timesteps
+
+allocator:
+  method: analytical        # analytical, lp, equal, query_proportional
+  solver: scipy             # scipy (linprog) — used when method=lp
+  query_weight_decay: 0.9   # weight decay for higher-order queries
+
+enforcer:
+  method: optimal_transport # optimal_transport or greedy
+  max_repair_iterations: 100
+  ot_reg: 0.01              # entropic regularization for Sinkhorn
+
+evaluation:
+  num_queries: 100
+  query_types:
+    - 1way
+    - 2way
+    - 3way
+    - cross_table
+  ml_test_fraction: 0.3
+  ml_model: random_forest
+
+experiment:
+  epsilons: [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+  num_runs: 3
+  seed: 42
+  datasets:
+    - berka
+    - rossmann
+    - imdb
+    - tpch
+    - university
+    - walmart
+    - synthetic_star
