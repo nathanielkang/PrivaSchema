@@ -1,0 +1,50 @@
+privacy:
+  epsilon_total: 1.0
+  delta: 1.0e-5
+  epsilon_min_per_table: 0.01
+
+synthesis:
+  method: noisy_marginals
+  max_parents_bn: 2
+  noise_type: laplace
+  num_bins: 16
+  epochs: 5
+  hidden_dims: [64, 64]
+  T: 50
+
+allocator:
+  method: lp_rdp
+  solver: scipy
+  query_weight_decay: 0.9
+  workload_mode: paper
+
+enforcer:
+  method: greedy
+  max_repair_iterations: 50
+  ot_reg: 0.01
+
+evaluation:
+  num_queries: 20
+  query_types:
+    - 1way
+    - 2way
+    - cross_table
+  ml_test_fraction: 0.2
+  ml_model: lightgbm
+
+baselines:
+  methods:
+    - privaschema
+    - equal_split
+    - independent
+  non_private_methods: []
+  skip_on_missing: true
+  allow_named_fallbacks: false
+  allow_aim_bootstrap: false
+
+experiment:
+  epsilons: [1.0]
+  num_runs: 1
+  seed: 42
+  datasets:
+    - synthetic_tiny

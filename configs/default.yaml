@@ -1,0 +1,74 @@
+privacy:
+  epsilon_total: 1.0
+  delta: 1.0e-5
+  epsilon_min_per_table: 0.01
+
+synthesis:
+  method: noisy_marginals   # noisy_marginals (PrivBayes-style) or diffusion
+  max_parents_bn: 3         # max parents in Bayesian network
+  noise_type: laplace       # laplace or gaussian
+  num_bins: 32              # discretization bins for continuous columns
+  fk_rdp_share: 0.25        # quadratic: ε_fk² = 0.25 ε_i², ε_synth² = 0.75 ε_i²
+  fk_hist_frac: 0.25        # alias for fk_rdp_share
+  fk_sampling: degree       # degree | uniform
+  epochs: 200               # for diffusion method
+  hidden_dims: [256, 256]   # for diffusion method
+  T: 1000                   # diffusion timesteps
+
+allocator:
+  method: lp_rdp            # manuscript Eq. (5); do not use analytical for tables
+  solver: scipy
+  query_weight_decay: 0.9
+  workload_mode: paper      # FK pairs + 3-way paths + 1-way; weights 1/M
+
+enforcer:
+  method: optimal_transport # optimal_transport or greedy
+  max_repair_iterations: 100
+  ot_reg: 0.01              # entropic regularization for Sinkhorn
+
+evaluation:
+  num_queries: 100
+  query_types:
+    - 1way
+    - 2way
+    - 3way
+    - cross_table
+  ml_test_fraction: 0.2
+  ml_model: lightgbm
+  join_clip_mult: 10.0
+  membership_inference: false
+
+baselines:
+  # Phase B default: same-engine only. Add aim_repair + privaschema_aim for Phase C.
+  # Never publish privlava / privpetal / grdm unless the real stack ran.
+  methods:
+    - privaschema
+    - equal_split
+    - independent
+    - sdv_hma
+    - aim_repair
+    - privaschema_aim
+  non_private_methods:
+    - sdv_hma
+  skip_on_missing: true
+  external_root: external
+  allow_named_fallbacks: false
+  allow_aim_bootstrap: false
+  aim_split: sqrt
+  aim_preprocessor_frac: 0.2
+  grdm_launch: false
+  grdm_dataset_name: privaschema_export
+  grdm_num_timesteps: 500
+
+experiment:
+  epsilons: [0.5, 1.0, 5.0]
+  num_runs: 3
+  seed: 42
+  datasets:
+    - berka
+    - rossmann
+    - imdb
+    - tpch
+    - university
+    - walmart
+    - synthetic_star

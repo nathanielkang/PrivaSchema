@@ -1,0 +1,19 @@
+# Local-only (do not push to public github.com/nathanielkang/PrivaSchema)
+# Public mirror = proposed PrivaSchema pipeline only.
+src/baselines/
+external/
+extras/PrivLava/
+extras/PrivPetal/
+results/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+venv/
+/data/
+.env
+*.csv
+!configs/**
+
