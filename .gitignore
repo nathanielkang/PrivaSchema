@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Local-only (do not push to public github.com/nathanielkang/PrivaSchema)
 # Public mirror = proposed PrivaSchema pipeline only.
 src/baselines/
@@ -17,3 +18,15 @@ venv/
 *.csv
 !configs/**
 
+=======
+﻿__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+results/*
+!results/.gitkeep
+*.csv
+*.json
+!configs/**
+>>>>>>> origin/main

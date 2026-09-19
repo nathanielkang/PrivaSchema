@@ -900,7 +900,11 @@ def load_dataset(
     """Load a named dataset.
 
     Supported names: berka, rossmann, imdb, tpch, university, walmart,
+<<<<<<< HEAD
                      synthetic_star, synthetic_tiny.
+=======
+                     synthetic_star.
+>>>>>>> origin/main
     """
     _LOADERS: dict[str, Any] = {
         "berka": load_berka,
@@ -913,6 +917,7 @@ def load_dataset(
 
     if name == "synthetic_star":
         return generate_star_schema(**kwargs)
+<<<<<<< HEAD
     if name == "synthetic_tiny":
         return generate_star_schema(
             num_dimension_tables=2,
@@ -922,11 +927,17 @@ def load_dataset(
             num_fact_measures=1,
             seed=int(kwargs.get("seed", 42)),
         )
+=======
+>>>>>>> origin/main
     if name in _LOADERS:
         return _LOADERS[name](data_dir)
     raise ValueError(
         f"Unknown dataset: {name!r}. Choose from: "
+<<<<<<< HEAD
         f"{', '.join(list(_LOADERS) + ['synthetic_star', 'synthetic_tiny'])}"
+=======
+        f"{', '.join(list(_LOADERS) + ['synthetic_star'])}"
+>>>>>>> origin/main
     )
 
 
