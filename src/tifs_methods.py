@@ -169,8 +169,10 @@ def run_privlava_p(
 TIFS_RUNNERS = {
     "F": run_parent_first_aim_equal,
     "parent_first_aim_equal": run_parent_first_aim_equal,
+    "aim_parent_first_equal": run_parent_first_aim_equal,
     "U": run_uniform_fk,
     "uniform_fk": run_uniform_fk,
+    "aim_parent_first_uniform_fk": run_uniform_fk,
     "C": run_convex_no_parent_first,
     "convex_no_parent_first": run_convex_no_parent_first,
     "P": run_privlava_p,

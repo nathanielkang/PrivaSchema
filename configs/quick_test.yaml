@@ -8,6 +8,10 @@ synthesis:
   max_parents_bn: 2
   noise_type: laplace
   num_bins: 16
+  # Quadratic RDP split of each table budget: FK histogram 0.25, attributes 0.75
+  fk_rdp_share: 0.25
+  fk_hist_frac: 0.25
+  fk_sampling: degree
   epochs: 5
   hidden_dims: [64, 64]
   T: 50
@@ -31,6 +35,8 @@ evaluation:
     - cross_table
   ml_test_fraction: 0.2
   ml_model: lightgbm
+  join_clip_mult: 10.0      # cap synthetic join cardinality at 10× the real join
+  membership_inference: false
 
 baselines:
   methods:

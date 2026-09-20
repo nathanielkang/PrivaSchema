@@ -11,9 +11,9 @@ synthesis:
   max_parents_bn: 3
   noise_type: laplace
   num_bins: 32
-  fk_rdp_share: 0.25          # ε_fk² = 0.25 ε_i², ε_synth² = 0.75 ε_i²
+  fk_rdp_share: 0.25          # quadratic: FK-hist share 0.25, attribute share 0.75
   fk_hist_frac: 0.25
-  fk_sampling: degree         # degree | uniform
+  fk_sampling: degree         # degree-preserving hist | uniform key sampling
 
 allocator:
   method: lp_rdp
@@ -35,18 +35,18 @@ evaluation:
     - cross_table
   ml_test_fraction: 0.2
   ml_model: lightgbm
-  join_clip_mult: 10.0
-  membership_inference: true
+  join_clip_mult: 10.0        # clip synthetic join cardinality at 10× real
+  membership_inference: true  # optional RF presence test on the clipped join
 
 baselines:
   methods:
     - privaschema
     - equal_split
     - independent
-    - F
-    - U
-    - C
-    - P
+    - F   # alias: aim_parent_first_equal
+    - U   # alias: aim_parent_first_uniform_fk
+    - C   # alias: convex_no_parent_first
+    - P   # alias: privlava (skip stub if extras/PrivLava missing)
   non_private_methods: []
   skip_on_missing: true
   allow_named_fallbacks: false

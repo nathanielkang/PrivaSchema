@@ -35,7 +35,7 @@ evaluation:
     - cross_table
   ml_test_fraction: 0.2
   ml_model: lightgbm
-  join_clip_mult: 10.0
+  join_clip_mult: 10.0      # clip synthetic join cardinality at 10× the real join
   membership_inference: false
 
 baselines:

@@ -13,7 +13,8 @@ git clone https://github.com/caicre/PrivLava extras/PrivLava
 ```
 
 Or set `PRIVASCHEMA_PRIVLAVA_ROOT`. The runner raises a clear error if the
-clone or adapter is missing. It does **not** write stand-in metrics.
+clone or adapter is missing, writes `results/.../skipped/*.json`, and does
+**not** invent stand-in metrics.
 
 ## AIM (method `F`)
 

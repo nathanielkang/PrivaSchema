@@ -284,6 +284,36 @@ def main() -> None:
     def _save() -> None:
         write_results_with_seed_std(all_results, output_dir, stem="experiment_results")
 
+    def _write_skip_stub(
+        method_name: str,
+        dataset: str,
+        epsilon: float,
+        run_idx: int,
+        err: Exception,
+    ) -> Path:
+        """Record a missing optional extra. Never invent a numeric cell."""
+        stub_dir = output_dir / "skipped"
+        stub_dir.mkdir(parents=True, exist_ok=True)
+        safe_eps = "inf" if not np.isfinite(float(epsilon)) else f"{float(epsilon):g}"
+        stub_path = stub_dir / f"{method_name}_{dataset}_eps{safe_eps}_run{run_idx}.json"
+        payload = {
+            "status": "skipped",
+            "method": method_name,
+            "dataset": dataset,
+            "epsilon": epsilon if np.isfinite(float(epsilon)) else None,
+            "run": run_idx,
+            "reason": str(err),
+            "metrics": None,
+            "note": (
+                "Optional extra is not installed. No invented numbers. "
+                "Estimates belong in the local manuscript ledger, not here. "
+                "Install the official stack and rerun to measure this cell."
+            ),
+        }
+        stub_path.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
+        logger.warning("Skip stub written to %s", stub_path)
+        return stub_path
+
     for ds_name in datasets:
         logger.info("=" * 60)
         logger.info("Dataset: %s", ds_name)
@@ -341,6 +371,7 @@ def main() -> None:
                 )
             except (BaselineNotAvailableError, OptionalExtraError) as e:
                 logger.warning("Skipping %s: %s", method_name, e)
+                _write_skip_stub(method_name, ds_name, float("inf"), 0, e)
                 continue
             except Exception as e:  # noqa: BLE001
                 logger.exception("Failed %s: %s", method_name, e)
@@ -384,6 +415,7 @@ def main() -> None:
                         )
                     except (BaselineNotAvailableError, OptionalExtraError) as e:
                         logger.warning("Skipping %s: %s", method_name, e)
+                        _write_skip_stub(method_name, ds_name, float(epsilon), int(run_idx), e)
                         continue
                     except Exception as e:  # noqa: BLE001
                         logger.exception("Failed %s eps=%.2f: %s", method_name, epsilon, e)
