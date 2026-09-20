@@ -13,8 +13,7 @@ git clone https://github.com/caicre/PrivLava extras/PrivLava
 ```
 
 Or set `PRIVASCHEMA_PRIVLAVA_ROOT`. If the official source or adapter is
-missing, the runner writes a skip JSON under the output `skipped/` folder
-and does not invent a numeric row.
+missing, the runner writes a skip JSON under the output `skipped/` folder.
 
 ## AIM (method `F`)
 

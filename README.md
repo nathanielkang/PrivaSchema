@@ -34,7 +34,7 @@ python scripts/run_experiments.py --config configs/eps_grid.yaml --output result
 
 Default methods: `privaschema`, plus simple ablations `equal_split` / `independent`.
 
-Extra methods `F` / `U` / `C` / `P`: parent-first AIM with equal split, convex split with uniform FK, convex allocation without parent-first, and optional PrivLava. If PrivLava is not installed, the runner writes a skip JSON and does not invent a numeric row. See `extras/README.md`.
+Extra methods `F` / `U` / `C` / `P`: parent-first AIM with equal split, convex split with uniform FK, convex allocation without parent-first, and optional PrivLava. If PrivLava is not installed, the runner writes a skip JSON. See `extras/README.md`.
 
 The epsilon-grid config uses ε ∈ {0.1, 0.5, 1, 2, 4} and three seeds. Writers emit per-run CSV/JSON plus seed mean and sample standard deviation. The quadratic FK split is 0.25 / 0.75. Synthetic joins are clipped at 10× the real join cardinality. Membership inference is an optional random-forest presence test on the clipped join.
 

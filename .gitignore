@@ -1,5 +1,3 @@
-# Local-only (do not push to public github.com/nathanielkang/PrivaSchema)
-# Public mirror = proposed PrivaSchema pipeline only.
 src/baselines/
 external/
 extras/PrivLava/
