@@ -12,9 +12,8 @@ git clone https://github.com/caicre/PrivLava extras/PrivLava
 # add extras/PrivLava/privaschema_adapter.py with a synthesize(...) entry
 ```
 
-Or set `PRIVASCHEMA_PRIVLAVA_ROOT`. The runner raises a clear error if the
-clone or adapter is missing, writes `results/.../skipped/*.json`, and does
-**not** invent stand-in metrics.
+Or set `PRIVASCHEMA_PRIVLAVA_ROOT`. If the clone or adapter is missing, the
+runner skips that method.
 
 ## AIM (method `F`)
 

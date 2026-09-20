@@ -25,7 +25,7 @@ def split_table_and_fk_eps(
 ) -> tuple[float, float]:
     """Quadratic RDP split: ε_fk² = share · ε_i², ε_synth² = (1-share) · ε_i².
 
-    TIFS default is 0.25 / 0.75. ``fk_hist_frac`` is accepted as an alias for
+    Default share is 0.25 / 0.75. ``fk_hist_frac`` is accepted as an alias for
     the quadratic share (not a linear slice of ε).
     """
     share = float(fk_rdp_share if fk_hist_frac is None else fk_hist_frac)

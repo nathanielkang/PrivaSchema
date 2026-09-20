@@ -4,5 +4,5 @@
 class OptionalExtraError(RuntimeError):
     """Raised when an optional synthesizer stack is not installed.
 
-    Callers must skip the method and must not write invented numeric rows.
+    Callers skip the method when the optional stack is missing.
     """

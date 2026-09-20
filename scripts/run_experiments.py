@@ -24,13 +24,13 @@ from src.evaluation.writers import write_results_with_seed_std
 from src.integrity_enforcer import MinCostRepairer
 from src.schema import RelationalSchema
 from src.sequential_synthesizer import SequentialSynthesizer
-from src.tifs_methods import TIFS_RUNNERS
+from src.extra_methods import EXTRA_RUNNERS
 
 try:
     from src.baselines import run_named as _run_named_baselines
     from src.baselines.common import BaselineNotAvailableError
     from src.baselines.privaschema_aim import run_privaschema_aim
-except ImportError:  # public tree does not ship competitor clones
+except ImportError:  # optional baseline registry
     _run_named_baselines = None  # type: ignore[assignment]
     BaselineNotAvailableError = OptionalExtraError  # type: ignore[misc,assignment]
     run_privaschema_aim = None  # type: ignore[assignment]
@@ -169,9 +169,9 @@ def _dispatch(
     seed: int,
     local_runners: dict,
 ):
-    """Local F/U/C/P first, then optional competitor registry."""
-    if method_name in TIFS_RUNNERS:
-        return TIFS_RUNNERS[method_name](real_data, schema, cfg, epsilon, seed)
+    """Extra-method runners first, then the optional baseline registry."""
+    if method_name in EXTRA_RUNNERS:
+        return EXTRA_RUNNERS[method_name](real_data, schema, cfg, epsilon, seed)
     if method_name in local_runners and local_runners[method_name] is not None:
         return local_runners[method_name](real_data, schema, cfg, epsilon, seed)
     if _run_named_baselines is not None:
@@ -180,8 +180,8 @@ def _dispatch(
             local_runners=local_runners,
         )
     raise OptionalExtraError(
-        f"Unknown method {method_name!r} in the public tree. "
-        f"Known: {sorted(set(TIFS_RUNNERS) | set(local_runners))}"
+        f"Unknown method {method_name!r}. "
+        f"Known: {sorted(set(EXTRA_RUNNERS) | set(local_runners))}"
     )
 
 
@@ -238,7 +238,7 @@ def main() -> None:
         "privaschema": run_privaschema,
         "equal_split": run_equal_split,
         "independent": run_independent,
-        **{k: v for k, v in TIFS_RUNNERS.items()},
+        **{k: v for k, v in EXTRA_RUNNERS.items()},
     }
     if run_privaschema_aim is not None:
         local_runners["privaschema_aim"] = run_privaschema_aim
@@ -291,7 +291,7 @@ def main() -> None:
         run_idx: int,
         err: Exception,
     ) -> Path:
-        """Record a missing optional extra. Never invent a numeric cell."""
+        """Record a missing optional extra."""
         stub_dir = output_dir / "skipped"
         stub_dir.mkdir(parents=True, exist_ok=True)
         safe_eps = "inf" if not np.isfinite(float(epsilon)) else f"{float(epsilon):g}"
@@ -304,11 +304,7 @@ def main() -> None:
             "run": run_idx,
             "reason": str(err),
             "metrics": None,
-            "note": (
-                "Optional extra is not installed. No invented numbers. "
-                "Estimates belong in the local manuscript ledger, not here. "
-                "Install the official stack and rerun to measure this cell."
-            ),
+            "note": "Optional extra is not installed. Install the official stack and rerun.",
         }
         stub_path.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
         logger.warning("Skip stub written to %s", stub_path)

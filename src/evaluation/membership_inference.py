@@ -1,6 +1,6 @@
 """Stub membership-inference eval on the joined table.
 
-Protocol (train on real / synth), stated so a TIFS reader can rerun it:
+Protocol (train on real / synth):
 
 1. Inner-join every table along the longest FK chain (same helper as ML utility).
 2. Clip each join to ``join_clip_mult`` times the real join cardinality.

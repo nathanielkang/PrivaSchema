@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # PrivaSchema GCP setup + smoke + optional full campaign on fog-cpu.
-# Run from: ~/experiments/9_IEEE_TBigData_PrivaSchema/code
+# Run from the repository root.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"

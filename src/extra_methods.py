@@ -1,6 +1,5 @@
-"""TIFS missing-cell runners: F, U, C (P lives in optional_privlava).
+"""Extra-method runners: F, U, C (P lives in optional_privlava).
 
-Codes match the TIFS estimate ledger:
   F — parent-first AIM + equal ε/√K
   U — parent-first + convex split + uniform FK (no degree hist)
   C — convex allocator, no parent-first
@@ -166,7 +165,7 @@ def run_privlava_p(
     return run_privlava_optional(real_data, schema, cfg, epsilon, seed)
 
 
-TIFS_RUNNERS = {
+EXTRA_RUNNERS = {
     "F": run_parent_first_aim_equal,
     "parent_first_aim_equal": run_parent_first_aim_equal,
     "aim_parent_first_equal": run_parent_first_aim_equal,

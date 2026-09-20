@@ -1,7 +1,7 @@
 """Optional AIM table engine (smartnoise-synth + private-pgm).
 
 Used by method F (parent-first AIM + equal ε/√K). If the stack is missing,
-raises OptionalExtraError with install text. Does not invent a table row.
+raises OptionalExtraError with install text.
 """
 
 from __future__ import annotations

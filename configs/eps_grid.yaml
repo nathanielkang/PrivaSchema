@@ -1,4 +1,4 @@
-# TIFS missing cells only: F / U / C / P. P skips unless extras/PrivLava is real.
+# Epsilon sweep. Cells are measured only after a local run writes CSV/JSON.
 
 privacy:
   epsilon_total: 1.0
@@ -21,15 +21,16 @@ allocator:
   workload_mode: paper
 
 enforcer:
-  method: greedy
-  max_repair_iterations: 50
+  method: optimal_transport
+  max_repair_iterations: 100
   ot_reg: 0.01
 
 evaluation:
-  num_queries: 40
+  num_queries: 100
   query_types:
     - 1way
     - 2way
+    - 3way
     - cross_table
   ml_test_fraction: 0.2
   ml_model: lightgbm
@@ -38,6 +39,9 @@ evaluation:
 
 baselines:
   methods:
+    - privaschema
+    - equal_split
+    - independent
     - F   # alias: aim_parent_first_equal
     - U   # alias: aim_parent_first_uniform_fk
     - C   # alias: convex_no_parent_first
@@ -46,13 +50,18 @@ baselines:
   skip_on_missing: true
   allow_named_fallbacks: false
   allow_aim_bootstrap: false
+  aim_split: sqrt
   privlava_path: extras/PrivLava
 
 experiment:
-  epsilons: [1.0]
+  epsilons: [0.1, 0.5, 1.0, 2.0, 4.0]
   num_runs: 3
   seed: 42
   datasets:
     - berka
     - imdb
     - tpch
+    - synthetic_star
+    - university
+    - rossmann
+    - walmart

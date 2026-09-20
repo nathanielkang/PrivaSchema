@@ -22,7 +22,7 @@ from src.evaluation.writers import write_results_with_seed_std
 from src.integrity_enforcer import MinCostRepairer
 from src.schema import RelationalSchema
 from src.sequential_synthesizer import SequentialSynthesizer, SingleTableSynthesizer
-from src.tifs_methods import (
+from src.extra_methods import (
     run_convex_no_parent_first,
     run_parent_first_aim_equal,
     run_uniform_fk,

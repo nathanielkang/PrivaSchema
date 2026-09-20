@@ -9,8 +9,7 @@ Official stack (all required):
   - optional adapter: extras/PrivLava/privaschema_adapter.py::synthesize
 
 If any piece is missing, ``run_privlava`` raises OptionalExtraError with
-the install path. The experiment runner writes a JSON skip stub and does
-not invent a numeric row. Estimates stay in the local ledger, not here.
+the install path. The experiment runner writes a JSON skip stub.
 """
 
 from __future__ import annotations
