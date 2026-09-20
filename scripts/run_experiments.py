@@ -260,7 +260,7 @@ def main() -> None:
         if blocked:
             logger.warning(
                 "Dropping named fallback methods %s (allow_named_fallbacks=false). "
-                "Real clones only, or omit from Table I.",
+                "Install the official stack, or omit the method.",
                 blocked,
             )
             method_names = [m for m in method_names if m not in FAKE_NAMED_ROWS]

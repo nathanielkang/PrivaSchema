@@ -12,8 +12,9 @@ git clone https://github.com/caicre/PrivLava extras/PrivLava
 # add extras/PrivLava/privaschema_adapter.py with a synthesize(...) entry
 ```
 
-Or set `PRIVASCHEMA_PRIVLAVA_ROOT`. If the clone or adapter is missing, the
-runner skips that method.
+Or set `PRIVASCHEMA_PRIVLAVA_ROOT`. If the official source or adapter is
+missing, the runner writes a skip JSON under the output `skipped/` folder
+and does not invent a numeric row.
 
 ## AIM (method `F`)
 
